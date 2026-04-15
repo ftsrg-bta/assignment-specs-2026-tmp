@@ -52,12 +52,14 @@ Instead, we represent auction items by abstract entities that have the following
 * `id`: a unique identifier of the item (`uint256`)
 * `description`: an arbitrary textual description of the item meant for humans
 * `minBid`: the minimum bid value for the item individually (in a bid for an item bundle, the bid value must be at least the sum of the `minBid`s of the included items or greater)
+* `maxBid`: the maximum bid value for the item individually (in a bid for an item bundle, the bid value must not exceed the `maxBids` of any included item)
 * `owner`: represents the current owner of this abstract item (an Ethereum account (`address`) – **if currently under auction and not allocated, this must be the contract itself!**)
 
 **The items for the auction are given in the `initialize` function of the contract, as an array of `AuctionItem` structs.**
 
 * There must be at least one item in the auction.
 * Initialization must revert if the passed items array includes items with duplicate `id`s.
+* It is an error if an item’s `maxBid` is less than its `minBid` but the two values may be equal.
 * The intial `owner` of all items passed to `initialize` must be the set to the contract’s address.
 
 
@@ -95,6 +97,7 @@ Concretely, in this assignment:
   * Only committed and non-withdrawn bids can be revealed 
   * The bid amount revealed must be covered by the deposit sent in the commitment phase; otherwise, the function reverts
   * The sum of the minimum bids of the items included must be less than or equal to the bid value
+  * The bid amount must not exceed the maximum bid of any item included in the bundle
 * **There can be only one bid per address**
 
 #### 3. Withdrawal of Bids
