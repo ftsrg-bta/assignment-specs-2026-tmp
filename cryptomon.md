@@ -253,9 +253,9 @@ sequenceDiagram
     C ->> B: battle1.start()
     C ->> B: battle2.start()
     Note over B: Battle logic runs, winners are determined
+    deactivate C
 
     C ->> T: updateTournamentWinners(winner1, winner2)
-    deactivate C
 
     %% Next round if needed
     Organizer ->> C: executeTournamentRound(tournamentId)
@@ -280,7 +280,7 @@ sequenceDiagram
 * The initial evolution of a given monter (`evolutionStage`) must be initialized to **`1`**.
 * A monster may join a tournament if and only if its level is **at least `minLevel` and at most `maxLevel`**.
   * A `maxLevel` of `0` is also acceptable and means no upper restriction (any monster at or above `minLevel` may join).  A `minLevel` of `0` means no lower restriction.
-  * If `maxLevel` is non-zero, `minLevel` must not exceed `maxLevel`.
+  * If `maxLevel` is non-zero, `minLevel` must not exceed `maxLevel`;  otherwise `createTournament` must revert.
 * The value of `maxParticipants` in a tournament must be a power of 2 and its minimum value is `2`.
 * For any operations that refer to anything by ID (eg the moster ID parameter of `moves`), it is illegal to pass a parameter for an ‘unknown’ or nonexistent thing and such calls must revert.
 * Battle rewards (XP) may not be claimed in invalid states such as when the battle is not finished, when the caller was not a participant in the battle, the caller did not win the battle, or the reward was already claimed.  Any such illegal calls must revert.
