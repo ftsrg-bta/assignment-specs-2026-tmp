@@ -14,16 +14,19 @@ Players can participate in battles and tournaments to earn experience points (XP
 ## Technical Requirements
 
 ### 1. Monster Ownership
+
 - Each cryptómon must be implemented as a unique non-fungible token (NFT) following the [ERC-721](https://eips.ethereum.org/EIPS/eip-721) standard
 - Tokens must represent ownership, attributes, and abilities of each digital creature
 - Standard token operations (transfer, approval, etc.) must be supported
 
 ### 2. Contract Administration
+
 - The contract must implement the [ERC-173](https://eips.ethereum.org/EIPS/eip-173) standard for ownership
 - The designated admin must have exclusive rights to create new monsters
 - The ownership shall be transferable as specified in the ERC-173 standard
 
 ### 3. Player Challenge System
+
 - Players must be able to challenge others to battles using specific monster IDs
 - Challenge validation must include:
   - Verification that the player owns the challenging monster
@@ -31,6 +34,7 @@ Players can participate in battles and tournaments to earn experience points (XP
 - The opponent must explicitly accept challenges before battles commence
 
 ### 4. Tournament System
+
 - Implement a single-elimination tournament system where:
   - Players enter their monsters into competition brackets
   - Winners of each round advance to subsequent rounds
@@ -41,6 +45,7 @@ Players can participate in battles and tournaments to earn experience points (XP
   - Tournament progress tracking
 
 ### 5. Battle Mechanics
+
 - Implement a turn-based battle system with the following characteristics:
   - Each monster has a defined set of moves (attack, defend, heal, etc.)
   - Moves affect opponent Health Points (HP) in varying ways
@@ -126,6 +131,7 @@ Cryptomon ..|> ERC173
 ## System Interactions
 
 ### Battle Sequence
+
 1. Player1 initiates a challenge by calling `challengeMonster()`
 2. Player2 accepts the challenge via `acceptChallenge()`
 3. Players alternate turns using `useMove()` until one monster's HP reaches zero
@@ -186,6 +192,7 @@ sequenceDiagram
 ```
 
 ### Tournament Sequence
+
 1. Organizer creates tournament with `createTournament()`
 2. Players join tournament with `joinTournament()`
 3. Organizer executes tournament rounds via `executeTournamentRound()`
@@ -261,27 +268,25 @@ sequenceDiagram
     activate C
     C -->> Player1: release prize
     deactivate C
-
 ```
 
 
-## Additional Requirements
+## Additional Notes, Requirements, and Disambiguations
 
-> [!IMPORTANT]
-> Implementers must also create:
-> 
-> 1. A reward system that distributes appropriate XP and other incentives
-> 2. An evolution system that allows monsters to advance in stages based on XP thresholds
-
-
-## Additional Tasks
-
-* **Test the smart contract** by writing unit tests
-* **Document your solution** in the repository-level [`README.md`](../README.md) file.
+* The initial evolution of a given monter (`evolutionStage`) must be initialized to **`1`**.
+* The tournaments’ level restrictions are to be understood as upper limits; ie a monster may join a tournament if its level is **at most the level limit** but does not exceed it.
+* A `levelLimit` of `0` is also acceptable and means no restrictions (any monster may join).
+* The value of `maxParticipants` in a tournament must be a power of 2 and its minimum value is `2`.
+* For any operations that refer to anything by ID (eg the moster ID parameter of `moves`), it is illegal to pass a parameter for an ‘unknown’ or nonexistent thing and such calls must revert.
+* Battle rewards (XP) may not be claimed in invalid states such as when the battle is not finished, when the caller was not a participant in the battle, the caller did not win the battle, or the reward was already claimed.  Any such illegal calls must revert.
+* One player (address) may only enter one monster into a tournament.
+* Only a tournament’s organizer may call `executeTournamentRound` on the tournament.
+* The defined set of moves for monsters (returned by `moves`) must contain at least 4 items.
 
 
 ## Assignment Owner
 
 | Year | Owner                                                                                          |
 |:----:|:----------------------------------------------------------------------------------------------:|
-| 2025 | Toldi Balázs Ádám `<balazs.toldi@edu.bme.hu>` [@Bazsalanszky](https://github.com/Bazsalanszky) |
+| 2026 | Balázs Ádám Toldi `<balazs.toldi@edu.bme.hu>` [@Bazsalanszky](https://github.com/Bazsalanszky) |
+| 2025 | Balázs Ádám Toldi `<balazs.toldi@edu.bme.hu>` [@Bazsalanszky](https://github.com/Bazsalanszky) |
