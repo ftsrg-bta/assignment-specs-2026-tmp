@@ -85,7 +85,7 @@ class Cryptomon {
   +claimBattleReward(monsterId)
   -gainXP(monsterId, amount)
   -evolve(monsterId)
-  +createTournament(maxParticipants, levelLimit) uint
+  +createTournament(maxParticipants, minLevel, maxLevel) uint
   +joinTournament(tournamentId, monsterId)
   +executeTournamentRound(tournamentId)
   +claimTournamentPrize(tournamentId, monsterId)
@@ -104,7 +104,8 @@ class Tournament {
   +id: uint256
   +creator: address
   +maxParticipants: uint256
-  +levelLimit: uint256
+  +minLevel: uint256
+  +maxLevel: uint256
   +participants: uint256[]
   +active: bool
 }
@@ -213,11 +214,11 @@ sequenceDiagram
     participant B as Battle
 
     %% Organizer creates a new tournament
-    Organizer ->> C: createTournament(maxParticipants=4, levelLimit)
+    Organizer ->> C: createTournament(maxParticipants=4, minLevel, maxLevel)
     activate C
     create participant T as Tournament
     C ->> T: Create new Tournament struct
-    C ->> T: initialize(tournamentId, maxParticipants, levelLimit)
+    C ->> T: initialize(tournamentId, maxParticipants, minLevel, maxLevel)
     T -->> C: tournamentId
     deactivate C
 
@@ -277,8 +278,9 @@ sequenceDiagram
 > Unless stated otherwise, failing any requirement must result in the transaction **reverting.**
 
 * The initial evolution of a given monter (`evolutionStage`) must be initialized to **`1`**.
-* The tournaments’ level restrictions are to be understood as upper limits; ie a monster may join a tournament if its level is **at most the level limit** but does not exceed it.
-* A `levelLimit` of `0` is also acceptable and means no restrictions (any monster may join).
+* A monster may join a tournament if and only if its level is **at least `minLevel` and at most `maxLevel`**.
+  * A `maxLevel` of `0` is also acceptable and means no upper restriction (any monster at or above `minLevel` may join).  A `minLevel` of `0` means no lower restriction.
+  * If `maxLevel` is non-zero, `minLevel` must not exceed `maxLevel`.
 * The value of `maxParticipants` in a tournament must be a power of 2 and its minimum value is `2`.
 * For any operations that refer to anything by ID (eg the moster ID parameter of `moves`), it is illegal to pass a parameter for an ‘unknown’ or nonexistent thing and such calls must revert.
 * Battle rewards (XP) may not be claimed in invalid states such as when the battle is not finished, when the caller was not a participant in the battle, the caller did not win the battle, or the reward was already claimed.  Any such illegal calls must revert.
