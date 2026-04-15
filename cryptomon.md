@@ -273,6 +273,9 @@ sequenceDiagram
 
 ## Additional Notes, Requirements, and Disambiguations
 
+> [!NOTE]
+> Unless stated otherwise, failing any requirement must result in the transaction **reverting.**
+
 * The initial evolution of a given monter (`evolutionStage`) must be initialized to **`1`**.
 * The tournaments’ level restrictions are to be understood as upper limits; ie a monster may join a tournament if its level is **at most the level limit** but does not exceed it.
 * A `levelLimit` of `0` is also acceptable and means no restrictions (any monster may join).

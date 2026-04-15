@@ -40,6 +40,9 @@ There are a couple more aspects to the auction contract you must implement that 
 > [!WARNING]
 > Besides the detailed description below, make sure to read the NatSpec documentation comments in [`ICombinatorialAuction.sol`](contracts/ICombinatorialAuction.sol).
 
+> [!NOTE]
+> Unless stated otherwise, failing any requirement must result in the transaction **reverting.**
+
 #### 1. Auction Items
 
 In a full implementation, the items being auctioned would likely be represented by ERC-721 tokens (NFTs) or similar.

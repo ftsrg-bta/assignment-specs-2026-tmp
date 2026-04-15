@@ -1,4 +1,4 @@
-# Fantasy Sports League Management – Specification
+fan# Fantasy Sports League Management – Specification
 
 > [!IMPORTANT]
 > **Please make sure to review the authoritative assignment requirements at the [assignments wiki](https://github.com/ftsrg-bta/assignments/wiki).**
@@ -91,6 +91,9 @@ Please note that the `phase` key is used to determine the current phase of the l
 
 
 ## Error Handling
+
+> [!NOTE]
+> Unless stated otherwise, failing any requirement must result in the transaction **reverting;** ie, throwing a chaincode exception.
 
 Your smart contract must include clear and helpful error messages for invalid actions (such as duplicate entries, bets outside allowed ranges, invalid team compositions, and actions attempted in the wrong lifecycle phase).
 

@@ -24,6 +24,9 @@ Design and implement a smart contract supporting the above access management pro
 
 ## Additional Details (Java implementation)
 
+> [!NOTE]
+> Unless stated otherwise, failing any requirement must result in the transaction **reverting;** ie, throwing a `ChaincodeException`.
+
 * All asset classes have already been prepared for you in the [`hu.bme.mit.ftsrg.chaincode.launchcodes.assets`](src/main/java/hu/bme/mit/ftsrg/chaincode/launchcodes/assets) package
 * Similarly, events are prepared in [`hu.bme.mit.ftsrg.chaincode.launchcodes.events`](src/main/java/hu/bme/mit/ftsrg/chaincode/launchcodes/events)
 * **Your task is to implement the contract in [`LaunchCodes.java`](src/main/java/hu/bme/mit/ftsrg/chaincode/launchcodes/contract/LaunchCodes.java)** by filling in the method bodies
