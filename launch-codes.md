@@ -1,4 +1,10 @@
-# L(a)unch Codes
+# L(a)unch Codes – Specification
+
+> [!IMPORTANT]
+> **Please make sure to review the authoritative assignment requirements at the [assignments wiki](https://github.com/ftsrg-bta/assignments/wiki).**
+
+
+## Overview
 
 A high-security facility always houses a shift of two soldiers.
 It must also provide regular access to low-security clearance staff (food delivery, cleaning, etc.).
@@ -36,6 +42,7 @@ Design and implement a smart contract supporting the above access management pro
 > 5. Request ID parameters are always passed in composite key form, as returned by `CreateCompositeKey`.
 > 6. Other simpler IDs are passed in simple "business ID" form (that was used during their registration).
 > 7. The `AssetBase` interface implementations of asset classes (the `getTypeForCompositeKey` and `getAttributesForCompositeKey` methods) indicate how their composite key is composed. You must conform to this key format every time.
+
 
 ## Additional Tasks
 

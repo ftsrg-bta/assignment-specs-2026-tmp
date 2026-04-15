@@ -1,13 +1,7 @@
 # Combinatorial Auction with Value Density Heuristic – Specification
 
 > [!IMPORTANT]
-> Your assignment is only complete if you have all three:
->
-> 1. Implementation of the specification below (a skeleton has been prepared for you in [`contracts/`](contracts/)
-> 2. Unit tests for the specification below (in [`tests/`](tests/), using Hardhat)
-> 3. Documentation of your solution in [`README.md`](README.md)
->
-> More information: https://github.com/ftsrg-bta/assignments/wiki
+> **Please make sure to review the authoritative assignment requirements at the [assignments wiki](https://github.com/ftsrg-bta/assignments/wiki).**
 
 
 ## Overview
