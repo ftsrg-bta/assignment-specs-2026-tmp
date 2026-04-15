@@ -33,6 +33,7 @@ Implement a smart contract that manages the entire Fantasy Soccer League lifecyc
     - This initial number of players must honour the team size value.
   - Scoring rules based on soccer statistics.
     - Statistical values like `goals`, `assists`, `passes`, etc must be nonnegative numbers.
+  - Captain multiplier: an integer of at least `1`.  The performance stats of each team’s designated captain are multiplied by this value when computing that team’s match score.
   - Initialization must be possible to call on a completely blank ledger state.
   - Attempting to initialize a second time is an error.
 
@@ -42,6 +43,7 @@ Implement a smart contract that manages the entire Fantasy Soccer League lifecyc
 
 - **Team Registration:** Users create unique teams by choosing players from the available pool.
   - The same player may be selected by more than one team.
+  - Each team must designate one of its selected players as **captain** (`captainPlayerId`).  The captain must be one of the team’s own selected players.  The `Team` asset stores `captainPlayerId` and `GetTeam` returns it.
 - **Betting:** Users place bets within the limits defined during setup.
 
 ### 3. Play Phase
@@ -61,7 +63,7 @@ Implement a smart contract that manages the entire Fantasy Soccer League lifecyc
 
 ### Payout Logic
 
-Teams are ranked by total points.  Total points are calculated as the sum of all players’ points in the team.  A player’s points are calculated by multiplying their performance metrics by the corresponding scoring rules defined during the setup phase. 
+Teams are ranked by total points.  Total points are calculated as the sum of all players’ points in the team.  A player’s points are calculated by multiplying their performance metrics by the corresponding scoring rules defined during the setup phase.  The captain is an exception: each of the captain’s six performance metrics is first multiplied by `captainMultiplier` before applying the scoring rules.
 
 The winning team’s reward is the sum of all bets.
 
@@ -79,13 +81,14 @@ They have to be written to the chaincode state to the following keys:
 
 Also, the following single key-value pairs are used to store the league configuration:
 
-| Key            | Type                                          |
-|----------------|-----------------------------------------------|
-| `minBet`       | `number`                                      |
-| `maxBet`       | `number`                                      |
-| `teamSize`     | `number`                                      |
-| `phase`        | `"Setup"` or `"Draft"` or `"Play"` or `"End"` |
-| `scoreMapping` | `ScoreMapping`                                |
+| Key                 | Type                                          |
+|-------------------- |-----------------------------------------------|
+| `minBet`            | `number`                                      |
+| `maxBet`            | `number`                                      |
+| `teamSize`          | `number`                                      |
+| `phase`             | `"Setup"` or `"Draft"` or `"Play"` or `"End"` |
+| `scoreMapping`      | `ScoreMapping`                                |
+| `captainMultiplier` | `number`                                      |
 
 Please note that the `phase` key is used to determine the current phase of the league.  The chaincode should enforce that only valid actions can be performed in each phase.
 
